@@ -14,7 +14,7 @@ app.get("/writers", (request, response) => {
 
 app.get("/writers/:writerId", (request, response) => {
   response.json({
-    data: writersRepository.byId(request.params.postId)
+    data: writersRepository.byId(request.params.writerId)
   });
 });
 
