@@ -1,4 +1,5 @@
 const admin = require("firebase-admin");
+const logger = require("./../common/logger");
 
 const serviceAccount = require("./../key.json");
 const config = require("./../config");
@@ -30,6 +31,7 @@ const byId = async (id, collection) => {
       ...snapshot.data()
     };
   } catch (error) {
+    logger.error(error);
     throw error;
   }
 };
@@ -44,6 +46,7 @@ const all = async collection => {
       };
     });
   } catch (error) {
+    logger.error(error);
     throw error;
   }
 };
@@ -61,6 +64,7 @@ const findByAttribute = async (attribute, value, collection) => {
       };
     });
   } catch (error) {
+    logger.error(error);
     throw error;
   }
 };
