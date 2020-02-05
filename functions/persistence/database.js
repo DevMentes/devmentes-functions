@@ -49,16 +49,20 @@ const all = async collection => {
 };
 
 const findByAttribute = async (attribute, value, collection) => {
-  const snapshot = await instance
-    .collection(collection)
-    .where(attribute, "==", value)
-    .get();
-  return snapshot.docs.map(doc => {
-    return {
-      id: doc.id,
-      ...doc.data()
-    };
-  });
+  try {
+    const snapshot = await instance
+      .collection(collection)
+      .where(attribute, "==", value)
+      .get();
+    return snapshot.docs.map(doc => {
+      return {
+        id: doc.id,
+        ...doc.data()
+      };
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = { instance, byId, all, findByAttribute };
