@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 
 const serviceAccount = require("./../key.json");
 const config = require("./../config");
+const errorFactory = require("../common/errorFactory");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -18,7 +19,10 @@ const byId = async (id, collection) => {
       .get();
 
     if (!snapshot.exists) {
-      throw new Error(`Resource of id ${id} does not exists on  ${collection}`);
+      throw errorFactory(
+        `Resource of id ${id} does not exists on  ${collection}`,
+        10001
+      );
     }
 
     return {
@@ -26,7 +30,7 @@ const byId = async (id, collection) => {
       ...snapshot.data()
     };
   } catch (error) {
-    throw new Error(error.message);
+    throw error;
   }
 };
 
@@ -40,7 +44,7 @@ const all = async collection => {
       };
     });
   } catch (error) {
-    throw new Error(error.message);
+    throw error;
   }
 };
 
